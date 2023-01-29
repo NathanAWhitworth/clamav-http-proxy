@@ -1,5 +1,9 @@
 # ClamAVHttpProxy
 
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/nathanawhitworth/clamavhttpproxy/docker.yml?label=Docker)
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/nathanawhitworth/clamavhttpproxy?label=Latest)
+![GitHub](https://img.shields.io/github/license/nathanawhitworth/clamavhttpproxy?color=red&label=Licence)
+
 A simple HTTP wrapper for [ClamAV](https://www.clamav.net/), using [nClam](https://github.com/tekmaven/nClam) for communication with the ClamAV TCP socket. Authorisation for the API is currently implemented using API keys.
 
 ## Running
