@@ -1,0 +1,7 @@
+services:
+  proxy:
+    build: ../ClamAVHttpProxy
+
+  clamav:
+    ports:
+      - 3310:3310

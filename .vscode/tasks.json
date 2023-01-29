@@ -1,0 +1,61 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run",
+            "detail": "Run ClamAVHttpProxy with dotnet run and ClamAV with docker run",
+            "dependsOn": [
+                "ClamAV",
+                "ClamAVHttpProxy"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "ClamAVHttpProxy",
+            "detail": "Run ClamAVHttpProxy with dotnet run",
+            "command": "dotnet",
+            "type": "shell",
+            "args": [
+                "watch",
+                "run",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/ClamAVHttpProxy",
+                "env": {
+                    "DOTNET_WATCH_RESTART_ON_RUDE_EDIT": "1"
+                }
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "ClamAV",
+            "detail": "Run ClamAV with docker run",
+            "command": "docker",
+            "type": "shell",
+            "args": [
+                "run",
+                "--rm",
+                "-p",
+                "3310:3310",
+                "clamav/clamav:stable"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Run (docker)",
+            "detail": "Build and run ClamAVHttpProxy image alongside ClamAV container",
+            "command": "docker-compose",
+            "type": "shell",
+            "args": [
+                "up",
+                "--build"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/.docker",
+            },
+            "problemMatcher": []
+        },
+    ]
+}

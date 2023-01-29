@@ -1,0 +1,20 @@
+services:
+  proxy:
+    image: nathanawhitworth/clamavhttpproxy:latest
+    ports:
+      - 3311:80
+    depends_on:
+      - clamav
+    environment:
+      ClamAV__Host: clamav
+      ClamAV__Port: 3310
+      Auth__ValidApiKeys__0: ChangeMe
+      # Auth__ValidApiKeys__1: ChangeMe2
+
+  clamav:
+    image: clamav/clamav:stable_base
+    volumes:
+      - clamav-sigs:/var/lib/clamav
+
+volumes:
+  clamav-sigs:
