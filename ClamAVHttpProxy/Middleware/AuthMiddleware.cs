@@ -33,9 +33,9 @@ public class AuthMiddleware
                 ctx.Response.StatusCode = 401;
                 return;
             }
-        }
 
-        _logger.LogDebug("Request authorised via API key.");
+            _logger.LogDebug("Request authorised via API key.");
+        }
 
         await _next(ctx);
     }
