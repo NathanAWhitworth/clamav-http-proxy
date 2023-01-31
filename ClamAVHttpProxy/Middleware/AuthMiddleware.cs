@@ -22,15 +22,20 @@ public class AuthMiddleware
 
     public async Task InvokeAsync(HttpContext ctx)
     {
-        if (!ctx.Request.Headers.TryGetValue(API_KEY_HEADER, out var apiKey)
-            || !_validApiKeys.Contains(apiKey)) {
+        var endpoint = ctx.GetEndpoint();
 
-            _logger.LogWarning("Unauthorised request from {IPAddress}.", ctx.Connection.RemoteIpAddress);
-            ctx.Response.StatusCode = 401;
-            return;
+        if (endpoint?.DisplayName != "Health checks")
+        {
+            if (!ctx.Request.Headers.TryGetValue(API_KEY_HEADER, out var apiKey)
+                || !_validApiKeys.Contains(apiKey)) {
+
+                _logger.LogWarning("Unauthorised request from {IPAddress}.", ctx.Connection.RemoteIpAddress);
+                ctx.Response.StatusCode = 401;
+                return;
+            }
+
+            _logger.LogDebug("Request authorised via API key.");
         }
-
-        _logger.LogDebug("Request authorised via API key.");
 
         await _next(ctx);
     }
