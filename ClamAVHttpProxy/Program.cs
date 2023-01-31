@@ -1,3 +1,4 @@
+using ClamAVHttpProxy.HealthChecks;
 using ClamAVHttpProxy.Middleware;
 using ClamAVHttpProxy.Models.Configuration;
 using nClam;
@@ -11,9 +12,15 @@ builder.Services.AddSingleton(new ClamClient(
 builder.Services.Configure<AuthConfiguration>(
     builder.Configuration.GetRequiredSection("Auth"));
 
+builder.Services
+    .AddHealthChecks()
+    .AddCheck<ClamAVHealthCheck>("ClamAV");
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
+
+app.MapHealthChecks("/healthz");
 
 app.UseMiddleware<AuthMiddleware>();
 
